@@ -45,6 +45,8 @@ jobs:
         username: ubuntu
 
 
+
+
         
         key: ${{ secrets.EC2_KEY }}
         script: |
