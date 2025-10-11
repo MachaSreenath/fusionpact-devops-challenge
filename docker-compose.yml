@@ -19,8 +19,28 @@ services:
       - backend
     restart: always
 
+volumes:
+  backend_data:
 
-   prometheus:
+
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend/app/data:/app/data
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "80:80"
+
+  prometheus:
     image: prom/prometheus
     container_name: prometheus
     volumes:
@@ -30,7 +50,6 @@ services:
     depends_on:
       - backend
 
-
   grafana:
     image: grafana/grafana
     container_name: grafana
@@ -38,6 +57,3 @@ services:
       - "3000:3000"
     depends_on:
       - prometheus
-
-volumes:
-  backend_data:
